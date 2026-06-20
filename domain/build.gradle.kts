@@ -43,8 +43,11 @@ dependencies {
     //Hilt
     api(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    //Paging
+    implementation(libs.paging.runtime)
     //Test
     testImplementation(libs.junit)
+    testImplementation(libs.paging.testing)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     //Robolectric

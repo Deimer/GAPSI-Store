@@ -44,8 +44,6 @@ dependencies {
     //Hilt
     api(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    //Paging
-    implementation(libs.paging.runtime)
     //Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

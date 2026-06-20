@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:${libs.versions.hilt.get()}")
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${libs.versions.secretsGradlePlugin.get()}")
     }
 }
 

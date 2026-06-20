@@ -64,27 +64,12 @@ dependencies {
     //DI
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    //Compose
-    implementation(libs.activity.compose)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.graphics)
-    implementation(libs.compose.ui.tooling)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3)
-    implementation(platform(libs.compose.bom))
-    implementation(libs.compose.constraintlayout)
-    debugImplementation(libs.compose.ui.tooling)
-    implementation(libs.compose.icons.core)
     //Navigation
     implementation(libs.navigation3.runtime)
     implementation(libs.navigation3.ui)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.hilt.navigation.compose)
-    //Paging
-    implementation(libs.paging.compose)
-    //Image
-    implementation(libs.coil)
     //Tests Compose
     debugImplementation(libs.compose.test.manifest)
     androidTestImplementation(libs.test.junit4)

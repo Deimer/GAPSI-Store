@@ -23,3 +23,8 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "GAPSI-Store"
 include(":app")
+include(":network")
+include(":database")
+include(":datasource")
+include(":domain")
+include(":ds")

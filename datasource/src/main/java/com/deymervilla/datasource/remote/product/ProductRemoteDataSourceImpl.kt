@@ -13,5 +13,5 @@ class ProductRemoteDataSourceImpl @Inject constructor(
     ) = apiService.searchProductsByKeyword(
         keyword = keyword,
         page = page
-    )
+    ).products
 }

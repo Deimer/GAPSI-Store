@@ -52,8 +52,6 @@ dependencies {
     implementation(libs.compose.constraintlayout)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.compose.icons.core)
-    //Paging
-    implementation(libs.paging.compose)
     //Image
     implementation(libs.coil)
     //Test

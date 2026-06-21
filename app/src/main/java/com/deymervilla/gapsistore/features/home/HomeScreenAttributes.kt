@@ -1,0 +1,30 @@
+package com.deymervilla.gapsistore.features.home
+
+import androidx.paging.PagingData
+import com.deymervilla.domain.models.ProductModel
+import com.deymervilla.domain.models.SearchHistoryModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.emptyFlow
+
+data class HomeScreenAttributes(
+    val query: String = "",
+    val uiState: HomeUiState = HomeUiState.Idle,
+    val searchHistory: List<SearchHistoryModel> = emptyList(),
+    val products: Flow<PagingData<ProductModel>> = emptyFlow(),
+    val hasActiveSearch: Boolean = false
+)
+
+class HomeScreenState {
+
+    private val _attributes = MutableStateFlow(HomeScreenAttributes())
+    val attributes: StateFlow<HomeScreenAttributes> = _attributes.asStateFlow()
+
+    fun update(reducer: (HomeScreenAttributes) -> HomeScreenAttributes) {
+        _attributes.value = reducer(_attributes.value)
+    }
+
+    fun current(): HomeScreenAttributes = _attributes.value
+}

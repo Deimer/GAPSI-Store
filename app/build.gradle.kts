@@ -64,6 +64,16 @@ dependencies {
     //DI
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    //Compose
+    implementation(libs.activity.compose)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.tooling)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
+    debugImplementation(libs.compose.ui.tooling)
+    //Paging
+    implementation(libs.paging.compose)
     //Navigation
     implementation(libs.navigation3.runtime)
     implementation(libs.navigation3.ui)

@@ -68,6 +68,36 @@ class ProductRepositoryImplTest {
         assertTrue(snapshot.isEmpty())
     }
 
+    @Test
+    fun `fetchFirstResultThumbnail returns the thumbnail of the first product`() = runTest {
+        `when`(productRemoteDataSource.searchProductsByKeyword("sony", 1))
+            .thenReturn(listOf(dummyProductDTO("1"), dummyProductDTO("2")))
+
+        val result = repository.fetchFirstResultThumbnail("sony")
+
+        assertEquals("https://example.com/1.jpg", result)
+    }
+
+    @Test
+    fun `fetchFirstResultThumbnail returns null when there are no results`() = runTest {
+        `when`(productRemoteDataSource.searchProductsByKeyword("nonexistent", 1))
+            .thenReturn(emptyList())
+
+        val result = repository.fetchFirstResultThumbnail("nonexistent")
+
+        assertEquals(null, result)
+    }
+
+    @Test
+    fun `fetchFirstResultThumbnail returns null when remote data source throws`() = runTest {
+        `when`(productRemoteDataSource.searchProductsByKeyword("sony", 1))
+            .thenThrow(RuntimeException("Network error"))
+
+        val result = repository.fetchFirstResultThumbnail("sony")
+
+        assertEquals(null, result)
+    }
+
     private fun dummyProductDTO(id: String) = ProductDTO(
         productId = id,
         title = "Sony Product $id",

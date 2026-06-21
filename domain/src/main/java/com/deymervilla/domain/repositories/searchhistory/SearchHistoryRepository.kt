@@ -10,7 +10,7 @@ interface SearchHistoryRepository {
         thumbnailUrl: String?
     ): Boolean
 
-    fun fetchSearchHistory(): Flow<List<SearchHistoryModel>>
+    fun fetchSearchHistory(): Flow<Result<List<SearchHistoryModel>>>
 
     suspend fun deleteSearch(
         keyword: String

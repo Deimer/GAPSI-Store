@@ -12,6 +12,7 @@ import com.deymervilla.network.constants.NetworkConstants.JSON_PATH.FIELD_PROPS
 import com.deymervilla.network.constants.NetworkConstants.JSON_PATH.FIELD_SEARCH_RESULT
 import com.deymervilla.network.dto.ProductDTO
 import com.deymervilla.network.dto.RawItemDTO
+import com.deymervilla.network.dto.response.SearchResponseDTO
 import com.google.gson.Gson
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
@@ -28,7 +29,7 @@ import java.lang.reflect.Type
  * like "highly rated by customers" are ignored. It also filters out items that
  * are not __typename == "Product" (e.g., AdPlaceholder).
  */
-class SearchResultDeserializer: JsonDeserializer<List<ProductDTO>> {
+class SearchResultDeserializer: JsonDeserializer<SearchResponseDTO> {
 
     private val rawItemGson = Gson()
 
@@ -41,8 +42,8 @@ class SearchResultDeserializer: JsonDeserializer<List<ProductDTO>> {
         json: JsonElement?,
         typeOfT: Type?,
         context: JsonDeserializationContext?
-    ): List<ProductDTO> {
-        val root = json?.asJsonObject ?: return emptyList()
+    ): SearchResponseDTO {
+        val root = json?.asJsonObject ?: return SearchResponseDTO(emptyList())
 
         val items = root
             .getAsJsonObjectOrNull(FIELD_ITEM)
@@ -54,9 +55,9 @@ class SearchResultDeserializer: JsonDeserializer<List<ProductDTO>> {
             ?.firstOrNull { it.isJsonObject }
             ?.asJsonObject
             ?.getAsJsonArrayOrNull(FIELD_ITEMS)
-            ?: return emptyList()
+            ?: return SearchResponseDTO(emptyList())
 
-        return items.mapNotNull { element ->
+        val products = items.mapNotNull { element ->
             runCatching {
                 if (!element.isJsonObject) return@runCatching null
                 val typeName = element.asJsonObject.get(FIELD_TYPENAME)?.asString
@@ -66,6 +67,8 @@ class SearchResultDeserializer: JsonDeserializer<List<ProductDTO>> {
                 raw?.takeIf { !it.usItemId.isNullOrBlank() }?.toProductDTO()
             }.getOrNull()
         }
+
+        return SearchResponseDTO(products)
     }
 
     private fun RawItemDTO.toProductDTO(): ProductDTO {

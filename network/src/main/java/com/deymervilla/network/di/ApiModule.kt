@@ -6,11 +6,10 @@ import com.deymervilla.network.constants.NetworkConstants.DEFAULTS.DEFAULT_TIMEO
 import com.deymervilla.network.constants.NetworkConstants.HEADERS.RAPID_API_HOST_VALUE
 import com.deymervilla.network.constants.NetworkConstants.PARAMETERS.HEADER_RAPID_API_HOST
 import com.deymervilla.network.constants.NetworkConstants.PARAMETERS.HEADER_RAPID_API_KEY
-import com.deymervilla.network.dto.ProductDTO
+import com.deymervilla.network.dto.response.SearchResponseDTO
 import com.deymervilla.network.parser.SearchResultDeserializer
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,9 +27,8 @@ object ApiModule {
 
     @Provides
     fun provideGson(): Gson {
-        val productListType = object : TypeToken<List<ProductDTO>>() {}.type
         return GsonBuilder()
-            .registerTypeAdapter(productListType, SearchResultDeserializer())
+            .registerTypeAdapter(SearchResponseDTO::class.java, SearchResultDeserializer())
             .create()
     }
 

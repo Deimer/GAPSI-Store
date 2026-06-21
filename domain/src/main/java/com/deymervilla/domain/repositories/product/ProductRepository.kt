@@ -9,8 +9,4 @@ interface ProductRepository {
     fun searchProductsByKeyword(
         keyword: String
     ): Flow<PagingData<ProductModel>>
-
-    suspend fun fetchFirstResultThumbnail(
-        keyword: String
-    ): String?
 }

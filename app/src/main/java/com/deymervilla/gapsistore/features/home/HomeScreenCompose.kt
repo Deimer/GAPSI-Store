@@ -24,6 +24,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deymervilla.ds.components.ProductCardCompose
+import com.deymervilla.ds.components.RecentSearchesHorizontalCompose
 import com.deymervilla.ds.components.SearchFieldCompose
 import com.deymervilla.ds.screens.ErrorScreenCompose
 import com.deymervilla.ds.screens.LoadingScreenCompose
@@ -68,12 +69,23 @@ private fun HomeScreenContent(
             }
         )
 
-        ProductResultsGrid(
-            keyword = attributes.query,
-            attributes = attributes,
-            onFirstResultLoaded = actions::onFirstResultLoaded,
-            onProductClick = actions::onProductClick
-        )
+        if (!attributes.hasActiveSearch) {
+            if (historyUIItems.isNotEmpty()) {
+                RecentSearchesHorizontalCompose(
+                    title = "Búsquedas recientes",
+                    items = historyUIItems,
+                    onItemClick = actions::onSearchHistoryItemClick,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            }
+        } else {
+            ProductResultsGrid(
+                keyword = attributes.query,
+                attributes = attributes,
+                onFirstResultLoaded = actions::onFirstResultLoaded,
+                onProductClick = actions::onProductClick
+            )
+        }
     }
 }
 

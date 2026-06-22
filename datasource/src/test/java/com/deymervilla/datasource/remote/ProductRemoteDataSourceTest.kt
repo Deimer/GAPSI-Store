@@ -3,6 +3,7 @@ package com.deymervilla.datasource.remote
 import com.deymervilla.datasource.remote.product.ProductRemoteDataSourceImpl
 import com.deymervilla.network.api.ApiService
 import com.deymervilla.network.dto.ProductDTO
+import com.deymervilla.network.dto.response.SearchResponseDTO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -28,18 +29,18 @@ class ProductRemoteDataSourceTest {
 
     @Test
     fun `searchProductsByKeyword delegates to apiService with correct params`() = runTest {
-        val expected = listOf(dummyProductDTO(id = "1", title = "Sony Headphones"))
+        val expected = SearchResponseDTO(listOf(dummyProductDTO(id = "1", title = "Sony Headphones")))
         `when`(apiService.searchProductsByKeyword(keyword = "sony", page = 1)).thenReturn(expected)
 
         val result = dataSource.searchProductsByKeyword(keyword = "sony", page = 1)
 
-        assertEquals(expected, result)
+        assertEquals(expected.products, result)
     }
 
     @Test
     fun `searchProductsByKeyword returns empty list when api returns empty`() = runTest {
         `when`(apiService.searchProductsByKeyword(keyword = "nonexistent", page = 1))
-            .thenReturn(emptyList())
+            .thenReturn(SearchResponseDTO(emptyList()))
 
         val result = dataSource.searchProductsByKeyword(keyword = "nonexistent", page = 1)
 
